@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programação AMWC · Fotona</title>
+<meta name="description" content="Programação oficial de aulas e demonstrações ao vivo da Fotona no AMWC — 17 a 19 de junho de 2026.">
+
+<link rel="icon" type="image/png" href="assets/fotona-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --accent: #FF0000;
+    --bg: #0A0A0B;
+    --fg: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Archivo', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: var(--fg);
+  }
+
+  @keyframes fotPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,0,0,0.55); }
+    50%      { box-shadow: 0 0 0 7px rgba(255,0,0,0); }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+
+  .page {
+    min-height: 100vh;
+    background: radial-gradient(110% 60% at 50% -10%, #16161a 0%, #0A0A0B 60%);
+    padding: 0 20px 80px;
+  }
+
+  /* HEADER */
+  .header {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 48px 0 32px;
+    text-align: center;
+  }
+  .header img {
+    height: 60px;
+    width: auto;
+    margin: 0 auto 28px;
+    display: block;
+  }
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-size: clamp(34px, 7vw, 64px);
+    line-height: 0.96;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .lede {
+    margin: 18px auto 0;
+    max-width: 460px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #9A9A9D;
+  }
+
+  /* TABS */
+  .tabbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10,10,11,0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    margin: 0 -20px 36px;
+    padding: 0 20px;
+  }
+  .tablist {
+    max-width: 920px;
+    margin: 0 auto;
+    display: flex;
+    gap: 6px;
+    padding: 10px 0;
+  }
+  .tab {
+    flex: 1;
+    min-height: 64px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(255,255,255,0.04);
+    color: #C9C9CC;
+    border-radius: 14px;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    transition: all 180ms cubic-bezier(0.4,0,0.2,1);
+    font-family: inherit;
+  }
+  .tab:hover { border-color: rgba(255,255,255,0.28); }
+  .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tab .dow { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; }
+  .tab .dom { font-size: 24px; font-weight: 800; line-height: 1; }
+  .tab .count { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: #6E6E72; }
+  .tab[aria-selected="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .tab[aria-selected="true"] .count { color: rgba(255,255,255,0.8); }
+
+  /* NOW BANNER */
+  .now-banner {
+    max-width: 760px;
+    margin: 0 auto 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: linear-gradient(90deg, rgba(255,0,0,0.14), rgba(255,0,0,0.04));
+    border: 1px solid rgba(255,0,0,0.45);
+  }
+  .now-banner .dot {
+    flex-shrink: 0;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: fotPulse 1.8s infinite;
+  }
+  .now-banner .meta { min-width: 0; }
+  .now-banner .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .now-banner .title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .timeline .spine {
+    position: absolute;
+    left: 81px;
+    top: 14px;
+    bottom: 14px;
+    width: 2px;
+    background: rgba(255,255,255,0.09);
+  }
+  .row {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 14px;
+    position: relative;
+    transition: opacity 200ms ease;
+  }
+  .row .time-col {
+    width: 70px;
+    flex-shrink: 0;
+    text-align: right;
+    padding-top: 16px;
+  }
+  .row .time {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .row .dot-col {
+    width: 24px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .row .node {
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: #838383;
+    border: 3px solid #0A0A0B;
+  }
+  .row .body { flex: 1; min-width: 0; padding-left: 14px; }
+  .card {
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.09);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    border-radius: 16px;
+    padding: 16px 18px;
+    transition: border-color 180ms ease;
+  }
+  .card:hover { border-color: rgba(255,255,255,0.22); }
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .pills:empty { display: none; }
+  .pill-now {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--accent);
+    padding: 4px 9px;
+    border-radius: 999px;
+  }
+  .pill-now .blip {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    animation: fotPulse 1.8s infinite;
+  }
+  .pill-demo {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #FF5A5A;
+    border: 1px solid rgba(255,0,0,0.45);
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .card h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: #fff;
+    text-wrap: pretty;
+  }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin-top: 12px;
+  }
+  .fact {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+  .fact.speaker { color: #C9C9CC; }
+  .fact.local { color: #9A9A9D; }
+  .fact svg { flex-shrink: 0; }
+
+  /* live + past states */
+  .row.is-past { opacity: 0.5; }
+  .row.is-past .time { color: #6E6E72; }
+  .row.is-past .node { background: #3A3A3E; }
+  .row.is-now .time { color: var(--accent); }
+  .row.is-now .node {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(255,0,0,0.18);
+  }
+  .row.is-now .card {
+    background: rgba(255,0,0,0.07);
+    border-color: rgba(255,0,0,0.55);
+    box-shadow: 0 0 40px -8px rgba(255,0,0,0.45);
+  }
+
+  /* FOOTER */
+  .footer {
+    max-width: 760px;
+    margin: 48px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    text-align: center;
+  }
+  .footer p {
+    margin: 0;
+    font-size: 12.5px;
+    color: #6E6E72;
+    letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <img src="assets/fotona-logo.png" alt="Fotona">
+    <div class="eyebrow" id="event-dates">17 – 19 Junho 2026 · AMWC</div>
+    <h1 id="event-title">Programação AMWC</h1>
+    <p class="lede">Programação oficial de aulas e demonstrações ao vivo. Acompanhe os horários — o destaque mostra a aula acontecendo agora.</p>
+  </header>
+
+  <div class="tabbar">
+    <div class="tablist" role="tablist" aria-label="Dias do evento" id="tablist"></div>
+  </div>
+
+  <div id="now-banner"></div>
+
+  <div class="timeline">
+    <div class="spine"></div>
+    <div id="timeline-list"></div>
+  </div>
+
+  <footer class="footer">
+    <p id="updated-label">Atualizado —</p>
+  </footer>
+
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const ACCENT = "#FF0000";
+  const EVENT_TITLE = "Programação AMWC";
+  const EVENT_DATES = "17 – 19 Junho 2026 · AMWC";
+
+  // ── Schedule data (single source of truth — edit here to update the site) ──
+  const SCHEDULE = [
+    {
+      date: "2026-06-17", dow: "QUA", dom: "17",
+      classes: [
+        { time: "14:00", title: "Fotona Dynamis Nx e Starwalker na Ginecologia: aplicações práticas e resultados reais", speaker: "Liege Vidal", local: "Stand Fotona" },
+        { time: "15:00", title: "ATP Reboost", speaker: "Graciana Barbosa", local: "Stand Fotona" },
+        { time: "17:00", title: "PICO PRO", speaker: "Equipe LAHA", local: "Stand Fotona" },
+      ],
+    },
+    {
+      date: "2026-06-18", dow: "QUI", dom: "18",
+      classes: [
+        { time: "09:00", title: "Gluteo Lift", speaker: "Equipe LAHA — Juliana Soares", local: "Stand Fotona" },
+        { time: "11:40", title: "Microcoring Olhos", speaker: "Fernando Macedo", local: "Palco Principal", demo: true },
+        { time: "14:00", title: "Neck Lift — Rejuvenescimento de Pescoço", speaker: "Gisele Nunes", local: "Stand Fotona" },
+        { time: "14:55", title: "Reestruturação do Terço Inferior", speaker: "Guilherme Bueno", local: "Palco Principal", demo: true },
+        { time: "15:00", title: "HAIRSTART — Pós Transplante Capilar", speaker: "Samira Leite", local: "Stand Fotona" },
+        { time: "16:00", title: "Tratamento Flacidez Facial — Protocolo Combinado", speaker: "Thalita Voss", local: "Stand Fotona" },
+        { time: "17:00", title: "Modulação Anti-Inflamatória com Laser NdYag 1064nm e Exossomos no Tratamento do Melasma Recidivante: relato de caso", speaker: "Christiana Gonzaga", local: "Stand Fotona" },
+        { time: "17:50", title: "Contorno Corporal", speaker: "Talita Pompermaier", local: "Palco Principal", demo: true },
+      ],
+    },
+    {
+      date: "2026-06-19", dow: "SEX", dom: "19",
+      classes: [
+        { time: "10:00", title: "ATP Reboost", speaker: "Graciana Barbosa", local: "Stand Fotona" },
+        { time: "13:00", title: "Microcoring", speaker: "Tamires Scapin", local: "Stand Fotona" },
+        { time: "14:00", title: "Peeling para Tratamento de Poros", speaker: "Wolf Vieira", local: "Stand Fotona" },
+        { time: "16:00", title: "Ressurfacing Facial", speaker: "Victoria Lafayette", local: "Stand Fotona" },
+      ],
+    },
+  ];
+
+  const MONTHS = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+
+  // SVG icons
+  const ICON_SPEAKER = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#838383" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+  const ICON_LOCAL = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#838383" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>';
+
+  // ── State ──
+  let activeDay = pickInitialDay();
+
+  function pickInitialDay() {
+    const now = new Date();
+    const todayKey = localDateKey(now);
+    const i = SCHEDULE.findIndex(d => d.date === todayKey);
+    if (i >= 0) return i;
+    if (now < new Date(SCHEDULE[0].date + "T00:00:00")) return 0;
+    for (let k = 0; k < SCHEDULE.length; k++) {
+      if (now <= new Date(SCHEDULE[k].date + "T23:59:59")) return k;
+    }
+    return SCHEDULE.length - 1;
+  }
+
+  function localDateKey(d) {
+    return d.getFullYear() + "-" +
+      String(d.getMonth() + 1).padStart(2, "0") + "-" +
+      String(d.getDate()).padStart(2, "0");
+  }
+
+  // Compute live status for a day's classes against `now`
+  function buildDay(day, now) {
+    const starts = day.classes.map(c => new Date(day.date + "T" + c.time + ":00"));
+    return day.classes.map((c, i) => {
+      const start = starts[i];
+      const next = starts[i + 1];
+      const end = next || new Date(start.getTime() + 90 * 60000);
+      const isNow = now >= start && now < end;
+      const isPast = now >= end;
+      return { ...c, start, isNow, isPast, isDemo: !!c.demo };
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, ch => (
+      { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]
+    ));
+  }
+
+  // ── Render ──
+  function render() {
+    const now = new Date();
+
+    document.getElementById("event-title").textContent = EVENT_TITLE;
+    document.getElementById("event-dates").textContent = EVENT_DATES;
+
+    renderTabs();
+    renderBanner(now);
+    renderTimeline(now);
+    renderUpdated(now);
+  }
+
+  function renderTabs() {
+    const tablist = document.getElementById("tablist");
+    tablist.innerHTML = "";
+    SCHEDULE.forEach((d, i) => {
+      const n = d.classes.length;
+      const btn = document.createElement("button");
+      btn.className = "tab";
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-selected", String(i === activeDay));
+      btn.innerHTML =
+        '<span class="dow">' + escapeHtml(d.dow) + '</span>' +
+        '<span class="dom">' + escapeHtml(d.dom) + '</span>' +
+        '<span class="count">' + n + (n === 1 ? " aula" : " aulas") + '</span>';
+      btn.addEventListener("click", () => {
+        activeDay = i;
+        render();
+      });
+      tablist.appendChild(btn);
+    });
+  }
+
+  function renderBanner(now) {
+    const host = document.getElementById("now-banner");
+    let live = null;
+    for (const d of SCHEDULE) {
+      const found = buildDay(d, now).find(c => c.isNow);
+      if (found) { live = found; break; }
+    }
+    if (!live) { host.innerHTML = ""; return; }
+    host.innerHTML =
+      '<div class="now-banner">' +
+        '<span class="dot"></span>' +
+        '<div class="meta">' +
+          '<div class="label">Acontecendo agora · ' + escapeHtml(live.time) + '</div>' +
+          '<div class="title">' + escapeHtml(live.title) + '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function renderTimeline(now) {
+    const list = buildDay(SCHEDULE[activeDay], now);
+    const host = document.getElementById("timeline-list");
+    host.innerHTML = list.map(item => {
+      const stateClass = item.isNow ? "is-now" : (item.isPast ? "is-past" : "");
+      const pills =
+        (item.isNow ? '<span class="pill-now"><span class="blip"></span>Agora</span>' : '') +
+        (item.isDemo ? '<span class="pill-demo">Demo Oficial</span>' : '');
+      return (
+        '<div class="row ' + stateClass + '">' +
+          '<div class="time-col"><div class="time">' + escapeHtml(item.time) + '</div></div>' +
+          '<div class="dot-col"><span class="node"></span></div>' +
+          '<div class="body">' +
+            '<div class="card">' +
+              '<div class="pills">' + pills + '</div>' +
+              '<h3>' + escapeHtml(item.title) + '</h3>' +
+              '<div class="facts">' +
+                '<div class="fact speaker">' + ICON_SPEAKER + escapeHtml(item.speaker) + '</div>' +
+                '<div class="fact local">' + ICON_LOCAL + escapeHtml(item.local) + '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  function renderUpdated(now) {
+    document.getElementById("updated-label").textContent =
+      "Programação sujeita a alterações · Atualizado " +
+      String(now.getDate()).padStart(2, "0") + " " + MONTHS[now.getMonth()] + " · " +
+      String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+  }
+
+  // ── Boot + live refresh every 30s ──
+  render();
+  setInterval(render, 30000);
+})();
+</script>
+</body>
+</html>
