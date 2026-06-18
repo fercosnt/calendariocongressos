@@ -37,7 +37,7 @@
   .page {
     min-height: 100vh;
     background: radial-gradient(110% 60% at 50% -10%, #16161a 0%, #0A0A0B 60%);
-    padding: 0 20px 80px;
+    padding: 0 20px 104px;
   }
 
   /* HEADER */
@@ -312,6 +312,178 @@
     color: #6E6E72;
     letter-spacing: 0.02em;
   }
+
+  /* ── CTA ROW (sorteio + workshop) ── */
+  .cta-row {
+    max-width: 760px;
+    margin: 0 auto 4px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .cta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 16px;
+    padding: 18px 16px;
+    min-height: 84px;
+    font-family: inherit;
+    border: 1px solid rgba(255,255,255,0.12);
+    transition: transform 140ms ease, border-color 160ms ease, background 160ms ease;
+  }
+  .cta:active { transform: scale(0.985); }
+  .cta:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .cta-emoji { font-size: 24px; line-height: 1; flex-shrink: 0; }
+  .cta-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .cta-title { font-size: 15px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.12; }
+  .cta-sub { font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em; line-height: 1.15; }
+
+  .cta-workshop {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 10px 34px -12px rgba(255,0,0,0.7);
+  }
+  .cta-workshop:hover { background: #e60000; border-color: #e60000; }
+  .cta-workshop .cta-sub { color: rgba(255,255,255,0.85); }
+
+  .cta-raffle { background: rgba(255,255,255,0.05); color: #fff; }
+  .cta-raffle:hover { border-color: rgba(255,255,255,0.32); background: rgba(255,255,255,0.07); }
+  .cta-raffle .cta-sub { color: #9A9A9D; }
+
+  @media (max-width: 520px) {
+    .cta-row { gap: 10px; }
+    .cta { padding: 15px 13px; gap: 10px; min-height: 78px; }
+    .cta-emoji { font-size: 21px; }
+    .cta-title { font-size: 13.5px; }
+    .cta-sub { font-size: 10.5px; }
+  }
+
+  /* ── FLOATING DOCK (aparece no scroll) ── */
+  .dock {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 60;
+    display: flex;
+    gap: 10px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(10,10,11,0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    transform: translateY(120%);
+    transition: transform 300ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .dock.is-visible { transform: translateY(0); }
+  .dock-btn {
+    flex: 1;
+    min-height: 48px;
+    cursor: pointer;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff;
+    transition: transform 140ms ease;
+  }
+  .dock-btn:active { transform: scale(0.97); }
+  .dock-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .dock-raffle { background: rgba(255,255,255,0.07); }
+  .dock-workshop { background: var(--accent); border-color: var(--accent); }
+  @media (max-width: 380px) {
+    .dock-btn { font-size: 12px; }
+  }
+
+  /* ── MODAL ── */
+  .modal[hidden] { display: none; }
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  @media (min-width: 600px) {
+    .modal { align-items: center; padding: 24px; }
+  }
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: modalFade 220ms ease;
+  }
+  .modal-panel {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    background: #121214;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -10px 60px -10px rgba(0,0,0,0.85);
+    overflow: hidden;
+    animation: modalUp 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  @media (min-width: 600px) {
+    .modal-panel { border-radius: 22px; animation: modalPop 240ms cubic-bezier(0.16,1,0.3,1); }
+  }
+  @keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes modalUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes modalPop { from { transform: scale(0.96); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  .modal-head {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px 20px 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .modal-head .ttl-wrap { flex: 1; min-width: 0; }
+  .modal-title { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.2; }
+  .modal-sub { margin: 7px 0 0; font-size: 13px; line-height: 1.45; color: #9A9A9D; }
+  .modal-close {
+    flex-shrink: 0;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 150ms ease, border-color 150ms ease;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+  .modal-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #ffffff;
+  }
+  .form-wrap { display: none; }
+  .form-wrap.is-active { display: block; }
+  .form-wrap iframe { display: block; width: 100%; border: none; }
+
+  body.modal-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden; }
+  body.modal-open .dock { transform: translateY(120%) !important; }
 </style>
 </head>
 <body>
@@ -323,6 +495,23 @@
     <h1 id="event-title">Programação AMWC</h1>
     <p class="lede">Programação oficial de aulas e demonstrações ao vivo. Acompanhe os horários — o destaque mostra a aula acontecendo agora.</p>
   </header>
+
+  <div class="cta-row" id="cta-row">
+    <button class="cta cta-raffle" type="button" data-form="raffle">
+      <span class="cta-emoji">🎁</span>
+      <span class="cta-text">
+        <span class="cta-title">Participar do Sorteio</span>
+        <span class="cta-sub">Club Med + kit Avène</span>
+      </span>
+    </button>
+    <button class="cta cta-workshop" type="button" data-form="workshop">
+      <span class="cta-emoji">🥂</span>
+      <span class="cta-text">
+        <span class="cta-title">Workshop + Coquetel</span>
+        <span class="cta-sub">Vagas limitadas</span>
+      </span>
+    </button>
+  </div>
 
   <div class="tabbar">
     <div class="tablist" role="tablist" aria-label="Dias do evento" id="tablist"></div>
@@ -340,6 +529,68 @@
   </footer>
 
 </div>
+
+<!-- Barra flutuante (aparece ao rolar) -->
+<div class="dock" id="dock" aria-hidden="true">
+  <button class="dock-btn dock-raffle" type="button" data-form="raffle">🎁 Sorteio</button>
+  <button class="dock-btn dock-workshop" type="button" data-form="workshop">🥂 Workshop + Coquetel</button>
+</div>
+
+<!-- Modal dos formulários GHL -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-head">
+      <div class="ttl-wrap">
+        <h2 class="modal-title" id="modal-title"></h2>
+        <p class="modal-sub" id="modal-sub"></p>
+      </div>
+      <button class="modal-close" type="button" data-close aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="form-wrap" data-form-pane="raffle">
+        <iframe
+          data-src="https://api.leadconnectorhq.com/widget/form/aw2s2reMN11YEuvY16NX"
+          style="width:100%;height:1994px;border:none;"
+          id="inline-aw2s2reMN11YEuvY16NX"
+          data-layout="{'id':'INLINE'}"
+          data-trigger-type="alwaysShow"
+          data-trigger-value=""
+          data-activation-type="alwaysActivated"
+          data-activation-value=""
+          data-deactivation-type="neverDeactivate"
+          data-deactivation-value=""
+          data-form-name="Forms - SRT | 20260617 | AMWC"
+          data-height="1994"
+          data-layout-iframe-id="inline-aw2s2reMN11YEuvY16NX"
+          data-form-id="aw2s2reMN11YEuvY16NX"
+          title="Forms - SRT | 20260617 | AMWC">
+        </iframe>
+      </div>
+      <div class="form-wrap" data-form-pane="workshop">
+        <iframe
+          data-src="https://api.leadconnectorhq.com/widget/form/EBZlidGuc1RWWWLWoVJ7"
+          style="width:100%;height:1134px;border:none;"
+          id="inline-EBZlidGuc1RWWWLWoVJ7"
+          data-layout="{'id':'INLINE'}"
+          data-trigger-type="alwaysShow"
+          data-trigger-value=""
+          data-activation-type="alwaysActivated"
+          data-activation-value=""
+          data-deactivation-type="neverDeactivate"
+          data-deactivation-value=""
+          data-form-name="00.Forms - EVT | 20260617 | Coquetel Pós-AMWC"
+          data-height="1134"
+          data-layout-iframe-id="inline-EBZlidGuc1RWWWLWoVJ7"
+          data-form-id="EBZlidGuc1RWWWLWoVJ7"
+          title="00.Forms - EVT | 20260617 | Coquetel Pós-AMWC">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://link.msgsndr.com/js/form_embed.js"></script>
 
 <script>
 (() => {
@@ -520,6 +771,118 @@
   // ── Boot + live refresh every 30s ──
   render();
   setInterval(render, 30000);
+})();
+</script>
+
+<script>
+(() => {
+  "use strict";
+
+  const modal = document.getElementById("modal");
+  const titleEl = document.getElementById("modal-title");
+  const subEl = document.getElementById("modal-sub");
+  const bodyEl = document.getElementById("modal-body");
+  const dock = document.getElementById("dock");
+  const ctaRow = document.getElementById("cta-row");
+  if (!modal) return;
+
+  const FORMS = {
+    raffle: {
+      title: "Participe do Sorteio",
+      sub: ""
+    },
+    workshop: {
+      title: "Workshop + Coquetel",
+      sub: "Garanta sua vaga no workshop com coquetel pós-AMWC no nosso Centro de Treinamento. Vagas limitadas."
+    }
+  };
+
+  let lastFocus = null;
+  let savedScrollY = 0;
+
+  function showPane(key) {
+    const wraps = modal.querySelectorAll(".form-wrap");
+    wraps.forEach(w => {
+      const isMatch = w.getAttribute("data-form-pane") === key;
+      w.classList.toggle("is-active", isMatch);
+      if (isMatch) {
+        const iframe = w.querySelector("iframe");
+        // Lazy-load: só busca o form na primeira abertura
+        if (iframe && !iframe.getAttribute("src") && iframe.dataset.src) {
+          iframe.setAttribute("src", iframe.dataset.src);
+        }
+      }
+    });
+  }
+
+  function openModal(key) {
+    const cfg = FORMS[key];
+    if (!cfg) return;
+    lastFocus = document.activeElement;
+    titleEl.textContent = cfg.title;
+    subEl.textContent = cfg.sub;
+    subEl.style.display = cfg.sub ? "" : "none";
+    showPane(key);
+
+    // Trava o scroll do fundo preservando a posição (robusto no iOS)
+    savedScrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.top = (-savedScrollY) + "px";
+    document.body.classList.add("modal-open");
+
+    modal.hidden = false;
+    if (bodyEl) bodyEl.scrollTop = 0;
+    const closeBtn = modal.querySelector(".modal-close");
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeModal() {
+    if (modal.hidden) return;
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+    document.body.style.top = "";
+    window.scrollTo(0, savedScrollY);
+    if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+  }
+
+  // Botões que abrem (topo + dock)
+  document.querySelectorAll("[data-form]").forEach(btn => {
+    btn.addEventListener("click", () => openModal(btn.getAttribute("data-form")));
+  });
+
+  // Fechar: X, backdrop, ESC
+  modal.querySelectorAll("[data-close]").forEach(el => {
+    el.addEventListener("click", closeModal);
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && !modal.hidden) closeModal();
+  });
+
+  // Foco preso dentro do modal (Tab)
+  modal.addEventListener("keydown", e => {
+    if (e.key !== "Tab" || modal.hidden) return;
+    const focusables = modal.querySelectorAll(
+      'button:not([disabled]), iframe, [href], [tabindex]:not([tabindex="-1"])'
+    );
+    const list = Array.prototype.filter.call(focusables, el =>
+      el.tagName === "IFRAME" || el.offsetParent !== null
+    );
+    if (!list.length) return;
+    const first = list[0];
+    const last = list[list.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
+
+  // Dock aparece quando a faixa de botões do topo sai da tela
+  if (ctaRow && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => dock.classList.toggle("is-visible", !en.isIntersecting));
+    }, { threshold: 0, rootMargin: "-12px 0px 0px 0px" });
+    io.observe(ctaRow);
+  }
 })();
 </script>
 </body>
