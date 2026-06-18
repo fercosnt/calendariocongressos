@@ -316,7 +316,7 @@
   /* ── CTA ROW (sorteio + workshop) ── */
   .cta-row {
     max-width: 760px;
-    margin: 0 auto 4px;
+    margin: 0 auto 22px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
@@ -327,19 +327,19 @@
     gap: 12px;
     text-align: left;
     cursor: pointer;
-    border-radius: 16px;
-    padding: 18px 16px;
-    min-height: 84px;
+    border-radius: 18px;
+    padding: 24px 18px;
+    min-height: 104px;
     font-family: inherit;
     border: 1px solid rgba(255,255,255,0.12);
     transition: transform 140ms ease, border-color 160ms ease, background 160ms ease;
   }
   .cta:active { transform: scale(0.985); }
   .cta:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-  .cta-emoji { font-size: 24px; line-height: 1; flex-shrink: 0; }
-  .cta-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-  .cta-title { font-size: 15px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.12; }
-  .cta-sub { font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em; line-height: 1.15; }
+  .cta-emoji { font-size: 30px; line-height: 1; flex-shrink: 0; }
+  .cta-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .cta-title { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.12; }
+  .cta-sub { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; line-height: 1.15; }
 
   .cta-workshop {
     background: var(--accent);
@@ -355,11 +355,15 @@
   .cta-raffle .cta-sub { color: #9A9A9D; }
 
   @media (max-width: 520px) {
+    .header { padding: 26px 0 16px; }
+    .header img { height: 46px; margin-bottom: 16px; }
+    .eyebrow { margin-bottom: 9px; }
+    .lede { display: none; }
     .cta-row { gap: 10px; }
-    .cta { padding: 15px 13px; gap: 10px; min-height: 78px; }
-    .cta-emoji { font-size: 21px; }
-    .cta-title { font-size: 13.5px; }
-    .cta-sub { font-size: 10.5px; }
+    .cta { padding: 20px 14px; gap: 11px; min-height: 96px; }
+    .cta-emoji { font-size: 26px; }
+    .cta-title { font-size: 16px; }
+    .cta-sub { font-size: 12px; }
   }
 
   /* ── FLOATING DOCK (aparece no scroll) ── */
