@@ -313,7 +313,7 @@
     letter-spacing: 0.02em;
   }
 
-  /* ── CTA ROW (sorteio + workshop) ── */
+  /* ── CTA ROW (sorteio) ── */
   .cta-row {
     max-width: 760px;
     margin: 0 auto 22px;
@@ -341,15 +341,6 @@
   .cta-text { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
   .cta-title { font-size: 23px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.12; }
   .cta-sub { font-size: 14.5px; font-weight: 600; letter-spacing: 0.02em; line-height: 1.15; }
-
-  .cta-workshop {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-    box-shadow: 0 10px 34px -12px rgba(255,0,0,0.7);
-  }
-  .cta-workshop:hover { background: #e60000; border-color: #e60000; }
-  .cta-workshop .cta-sub { color: rgba(255,255,255,0.85); }
 
   .cta-raffle {
     background: var(--accent);
@@ -407,7 +398,6 @@
   .dock-btn:active { transform: scale(0.97); }
   .dock-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
   .dock-raffle { background: var(--accent); border-color: var(--accent); }
-  .dock-workshop { background: var(--accent); border-color: var(--accent); }
   @media (max-width: 380px) {
     .dock-btn { font-size: 12px; }
   }
@@ -566,25 +556,6 @@
           data-layout-iframe-id="inline-aw2s2reMN11YEuvY16NX"
           data-form-id="aw2s2reMN11YEuvY16NX"
           title="Forms - SRT | 20260617 | AMWC">
-        </iframe>
-      </div>
-      <div class="form-wrap" data-form-pane="workshop">
-        <iframe
-          data-src="https://api.leadconnectorhq.com/widget/form/EBZlidGuc1RWWWLWoVJ7"
-          style="width:100%;height:1134px;border:none;"
-          id="inline-EBZlidGuc1RWWWLWoVJ7"
-          data-layout="{'id':'INLINE'}"
-          data-trigger-type="alwaysShow"
-          data-trigger-value=""
-          data-activation-type="alwaysActivated"
-          data-activation-value=""
-          data-deactivation-type="neverDeactivate"
-          data-deactivation-value=""
-          data-form-name="00.Forms - EVT | 20260617 | Coquetel Pós-AMWC"
-          data-height="1134"
-          data-layout-iframe-id="inline-EBZlidGuc1RWWWLWoVJ7"
-          data-form-id="EBZlidGuc1RWWWLWoVJ7"
-          title="00.Forms - EVT | 20260617 | Coquetel Pós-AMWC">
         </iframe>
       </div>
     </div>
@@ -791,10 +762,6 @@
     raffle: {
       title: "Participe do Sorteio",
       sub: ""
-    },
-    workshop: {
-      title: "Workshop + Coquetel",
-      sub: "Garanta sua vaga no workshop com coquetel pós-AMWC no nosso Centro de Treinamento. Vagas limitadas."
     }
   };
 
