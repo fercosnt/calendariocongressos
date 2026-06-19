@@ -318,28 +318,29 @@
     max-width: 760px;
     margin: 0 auto 22px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 12px;
   }
   .cta {
     display: flex;
     align-items: center;
-    gap: 12px;
-    text-align: left;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
     cursor: pointer;
     border-radius: 18px;
-    padding: 24px 18px;
-    min-height: 104px;
+    padding: 28px 22px;
+    min-height: 124px;
     font-family: inherit;
     border: 1px solid rgba(255,255,255,0.12);
     transition: transform 140ms ease, border-color 160ms ease, background 160ms ease;
   }
   .cta:active { transform: scale(0.985); }
   .cta:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-  .cta-emoji { font-size: 30px; line-height: 1; flex-shrink: 0; }
-  .cta-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-  .cta-title { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.12; }
-  .cta-sub { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; line-height: 1.15; }
+  .cta-emoji { font-size: 40px; line-height: 1; flex-shrink: 0; }
+  .cta-text { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+  .cta-title { font-size: 23px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.12; }
+  .cta-sub { font-size: 14.5px; font-weight: 600; letter-spacing: 0.02em; line-height: 1.15; }
 
   .cta-workshop {
     background: var(--accent);
@@ -350,20 +351,24 @@
   .cta-workshop:hover { background: #e60000; border-color: #e60000; }
   .cta-workshop .cta-sub { color: rgba(255,255,255,0.85); }
 
-  .cta-raffle { background: rgba(255,255,255,0.05); color: #fff; }
-  .cta-raffle:hover { border-color: rgba(255,255,255,0.32); background: rgba(255,255,255,0.07); }
-  .cta-raffle .cta-sub { color: #9A9A9D; }
+  .cta-raffle {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 12px 40px -12px rgba(255,0,0,0.72);
+  }
+  .cta-raffle:hover { background: #e60000; border-color: #e60000; }
+  .cta-raffle .cta-sub { color: rgba(255,255,255,0.88); }
 
   @media (max-width: 520px) {
     .header { padding: 26px 0 16px; }
     .header img { height: 46px; margin-bottom: 16px; }
     .eyebrow { margin-bottom: 9px; }
     .lede { display: none; }
-    .cta-row { gap: 10px; }
-    .cta { padding: 20px 14px; gap: 11px; min-height: 96px; }
-    .cta-emoji { font-size: 26px; }
-    .cta-title { font-size: 16px; }
-    .cta-sub { font-size: 12px; }
+    .cta { padding: 24px 16px; gap: 13px; min-height: 112px; }
+    .cta-emoji { font-size: 34px; }
+    .cta-title { font-size: 20px; }
+    .cta-sub { font-size: 13.5px; }
   }
 
   /* ── FLOATING DOCK (aparece no scroll) ── */
@@ -401,7 +406,7 @@
   }
   .dock-btn:active { transform: scale(0.97); }
   .dock-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-  .dock-raffle { background: rgba(255,255,255,0.07); }
+  .dock-raffle { background: var(--accent); border-color: var(--accent); }
   .dock-workshop { background: var(--accent); border-color: var(--accent); }
   @media (max-width: 380px) {
     .dock-btn { font-size: 12px; }
@@ -508,13 +513,6 @@
         <span class="cta-sub">Club Med + kit Avène</span>
       </span>
     </button>
-    <button class="cta cta-workshop" type="button" data-form="workshop">
-      <span class="cta-emoji">🥂</span>
-      <span class="cta-text">
-        <span class="cta-title">Workshop + Coquetel</span>
-        <span class="cta-sub">Vagas limitadas</span>
-      </span>
-    </button>
   </div>
 
   <div class="tabbar">
@@ -536,8 +534,7 @@
 
 <!-- Barra flutuante (aparece ao rolar) -->
 <div class="dock" id="dock" aria-hidden="true">
-  <button class="dock-btn dock-raffle" type="button" data-form="raffle">🎁 Sorteio</button>
-  <button class="dock-btn dock-workshop" type="button" data-form="workshop">🥂 Workshop + Coquetel</button>
+  <button class="dock-btn dock-raffle" type="button" data-form="raffle">🎁 Participar do Sorteio</button>
 </div>
 
 <!-- Modal dos formulários GHL -->
